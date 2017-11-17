@@ -19,7 +19,6 @@ public class StepsMainPage {
     @When("^I click on (Start Searching) button in Main page$")
     public void I_click_on_Start_Searching_button_in_Main_page(String nameButton ) throws Throwable {
         mainPage.startSearchingButton.click();
-        Thread.sleep(5000);
     }
 
 

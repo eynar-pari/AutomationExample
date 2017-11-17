@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'distribution'
+sourceCompatibility = 1.8
+version = '1.0'
+
+def browser = !project.hasProperty('browser') ? 'FIREFOX' : project.properties['browser']
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+/**
+ *Dependencies for Junit / Cucumber and Selenium
+ *
+ */
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'info.cukes:cucumber-java:1.2.4'
+    testCompile 'info.cukes:cucumber-junit:1.2.4'
+    testCompile 'junit:junit:4.11'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.4.0'
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+
+/**
+ * This task execute the automated test cases
+ */
+task runTest() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            systemProperty "BROWSER", browser.toString()
+
+            //configuration path
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'json:build/reports/cucumber/report.json', '-f', 'pretty', '--glue', 'gradle.cucumber',
+                    'src/test/resources/example/',
+                    '--tags'] + [category]
+        }
+    }
+}

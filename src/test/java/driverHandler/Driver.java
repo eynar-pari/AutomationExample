@@ -12,6 +12,7 @@ import static utils.Constant.*;
  */
 public class Driver {
 
+    public static final String browser = System.getProperty("BROWSER")==null?"FIREFOX": System.getProperty("BROWSER");
     private WebDriver driver;
     private WebDriverWait webDriverWait;
     private static Driver currentBrowser = null;
@@ -20,7 +21,7 @@ public class Driver {
      * This method is the constructor for Driver (Browser)
      */
     private Driver(){
-        driver = FactoryBrowser.make("FIREFOX").createDriver();
+        driver = FactoryBrowser.make(browser).createDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIME, TimeUnit.SECONDS);
         webDriverWait = new WebDriverWait(driver, IMPLICIT_WAIT_TIME);

@@ -1,14 +1,14 @@
 # AutomationExample
 
-##Requirement
+## Requirement
 
-Java
-Gradle
-Firefox > 57
-Chrome > 62
+- Java >8
+- Gradle
+- Firefox > 57
+- Chrome > 62
 
 ## Execute
 
 ```
-gradle runTest -Pcategory=@Test
+gradle runTest -Pcategory=@Test -Pbrowser=FIREFOX
 ```
